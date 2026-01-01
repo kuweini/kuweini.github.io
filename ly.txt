@@ -1,4 +1,10 @@
-hshdbhdhjhsjshhsnb
-jsjnsjsuudnjsuudud
-jsjdjdnjdhhjdndjjdjd
-dnhdjdmejdjndndjh
+
+Dear Valued Customer,
+
+You have recently reactivated your account successfully, just incase you have lost your access details we have included them in this mail;
+
+Cpanel URL : http://cpanel.byethost31.com
+Username   : b31_33479080
+
+Best Regards
+byethost31.com
