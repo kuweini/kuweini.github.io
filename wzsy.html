@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebHub - 网站导航索引站</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 2.2rem;
+            color: var(--accent-color);
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* 搜索区域样式 */
+        .search-section {
+            padding: 40px 0 20px;
+        }
+        
+        .search-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+        
+        .search-container h2 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .search-container p {
+            color: var(--gray-color);
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+        }
+        
+        .search-box {
+            display: flex;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .search-box button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .search-box button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* 快速链接样式 */
+        .quick-links {
+            padding: 20px 0 40px;
+        }
+        
+        .quick-links h2 {
+            margin-bottom: 25px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quick-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .quick-link {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 18px 15px;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--dark-color);
+            display: block;
+        }
+        
+        .quick-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .quick-link i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .quick-link span {
+            display: block;
+            font-weight: 600;
+        }
+        
+        /* 分类导航样式 */
+        .categories {
+            padding: 20px 0 50px;
+        }
+        
+        .categories h2 {
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .category-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        .category-header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .category-header i {
+            font-size: 1.8rem;
+        }
+        
+        .category-header h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .category-links {
+            padding: 20px;
+        }
+        
+        .category-links ul {
+            list-style: none;
+        }
+        
+        .category-links li {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .category-links li:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .category-links a {
+            color: var(--dark-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+        
+        .category-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .category-links a span {
+            font-weight: 500;
+        }
+        
+        .category-links a i {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        /* 底部样式 */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-column a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 15px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            nav li {
+                width: 100%;
+            }
+            
+            nav a {
+                display: block;
+                padding: 12px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 25px;
+                right: 20px;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .search-box input {
+                border-radius: var(--border-radius);
+                margin-bottom: 10px;
+            }
+            
+            .search-box button {
+                border-radius: var(--border-radius);
+                padding: 15px;
+            }
+            
+            .quick-links-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .quick-links-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-column {
+                min-width: 100%;
+            }
+        }
+        
+        /* 网站卡片样式 */
+        .website-card {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .website-card.active {
+            display: flex;
+        }
+        
+        .card-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .close-card {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-color);
+        }
+        
+        .card-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .card-content p {
+            margin-bottom: 20px;
+            color: var(--gray-color);
+        }
+        
+        .card-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .card-buttons a {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .visit-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .visit-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .bookmark-btn {
+            background-color: #f0f0f0;
+            color: var(--dark-color);
+        }
+        
+        .bookmark-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* 滚动到顶部按钮 */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+        }
+        
+        .scroll-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-to-top:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-compass"></i>
+                    <h1>Web<span>Hub</span></h1>
+                </div>
+                
+                <div class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="#"><i class="fas fa-home"></i> 首页</a></li>
+                        <li><a href="#categories"><i class="fas fa-th-large"></i> 分类</a></li>
+                        <li><a href="#quick-links"><i class="fas fa-bolt"></i> 快速链接</a></li>
+                        <li><a href="#"><i class="fas fa-star"></i> 收藏夹</a></li>
+                        <li><a href="#"><i class="fas fa-history"></i> 最近访问</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 搜索区域 -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-container">
+                <h2>探索优质网络资源</h2>
+                <p>输入关键词快速查找您需要的网站，或直接浏览下方分类</p>
+                
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="搜索网站、工具或资源...">
+                    <button id="searchBtn"><i class="fas fa-search"></i> 搜索</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 快速链接 -->
+    <section class="quick-links" id="quick-links">
+        <div class="container">
+            <h2><i class="fas fa-bolt"></i> 快速链接</h2>
+            <div class="quick-links-grid">
+                <a href="#" class="quick-link" data-site="google">
+                    <i class="fab fa-google"></i>
+                    <span>谷歌搜索</span>
+                </a>
+                <a href="#" class="quick-link" data-site="github">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <a href="#" class="quick-link" data-site="youtube">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube</span>
+                </a>
+                <a href="#" class="quick-link" data-site="stackoverflow">
+                    <i class="fab fa-stack-overflow"></i>
+                    <span>Stack Overflow</span>
+                </a>
+                <a href="#" class="quick-link" data-site="wikipedia">
+                    <i class="fab fa-wikipedia-w"></i>
+                    <span>维基百科</span>
+                </a>
+                <a href="#" class="quick-link" data-site="reddit">
+                    <i class="fab fa-reddit"></i>
+                    <span>Reddit</span>
+                </a>
+                <a href="#" class="quick-link" data-site="twitter">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                </a>
+                <a href="#" class="quick-link" data-site="linkedin">
+                    <i class="fab fa-linkedin"></i>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 分类导航 -->
+    <section class="categories" id="categories">
+        <div class="container">
+            <h2><i class="fas fa-th-large"></i> 网站分类</h2>
+            <div class="category-grid">
+                <!-- 搜索引擎 -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <i class="fas fa-search"></i>
+                        <h3>搜索引擎</h3>
+                    </div>
+                    <div class="category-links">
+                        <ul>
+                            <li><a href="#" data-site="google"><span>Google</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="bing"><span>Bing</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="baidu"><span>百度</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="duckduckgo"><span>DuckDuckGo</span> <i class="fas fa-external-link-alt"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 开发工具 -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <i class="fas fa-code"></i>
+                        <h3>开发工具</h3>
+                    </div>
+                    <div class="category-links">
+                        <ul>
+                            <li><a href="#" data-site="github"><span>GitHub</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="stackoverflow"><span>Stack Overflow</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="codepen"><span>CodePen</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="mdn"><span>MDN Web Docs</span> <i class="fas fa-external-link-alt"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 学习资源 -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>学习资源</h3>
+                    </div>
+                    <div class="category-links">
+                        <ul>
+                            <li><a href="#" data-site="coursera"><span>Coursera</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="udemy"><span>Udemy</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="khanacademy"><span>可汗学院</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="ted"><span>TED Talks</span> <i class="fas fa-external-link-alt"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 社交媒体 -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <i class="fas fa-users"></i>
+                        <h3>社交媒体</h3>
+                    </div>
+                    <div class="category-links">
+                        <ul>
+                            <li><a href="#" data-site="twitter"><span>Twitter</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="facebook"><span>Facebook</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="instagram"><span>Instagram</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="linkedin"><span>LinkedIn</span> <i class="fas fa-external-link-alt"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 新闻资讯 -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <i class="fas fa-newspaper"></i>
+                        <h3>新闻资讯</h3>
+                    </div>
+                    <div class="category-links">
+                        <ul>
+                            <li><a href="#" data-site="bbc"><span>BBC News</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="cnn"><span>CNN</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="reuters"><span>Reuters</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="nytimes"><span>纽约时报</span> <i class="fas fa-external-link-alt"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 娱乐休闲 -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <i class="fas fa-film"></i>
+                        <h3>娱乐休闲</h3>
+                    </div>
+                    <div class="category-links">
+                        <ul>
+                            <li><a href="#" data-site="youtube"><span>YouTube</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="netflix"><span>Netflix</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="spotify"><span>Spotify</span> <i class="fas fa-external-link-alt"></i></a></li>
+                            <li><a href="#" data-site="twitch"><span>Twitch</span> <i class="fas fa-external-link-alt"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 网站卡片弹窗 -->
+    <div class="website-card" id="websiteCard">
+        <div class="card-content">
+            <div class="close-card" id="closeCard">
+                <i class="fas fa-times"></i>
+            </div>
+            <h3 id="cardTitle">网站名称</h3>
+            <p id="cardDescription">网站描述信息将显示在这里。</p>
+            <div class="card-buttons">
+                <a href="#" id="visitLink" class="visit-btn" target="_blank"><i class="fas fa-external-link-alt"></i> 访问网站</a>
+                <a href="#" id="bookmarkLink" class="bookmark-btn"><i class="fas fa-bookmark"></i> 加入收藏</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部区域 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>关于 WebHub</h3>
+                    <ul>
+                        <li><a href="#">关于我们</a></li>
+                        <li><a href="#">联系我们</a></li>
+                        <li><a href="#">加入我们</a></li>
+                        <li><a href="#">用户协议</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>网站分类</h3>
+                    <ul>
+                        <li><a href="#">搜索引擎</a></li>
+                        <li><a href="#">开发工具</a></li>
+                        <li><a href="#">学习资源</a></li>
+                        <li><a href="#">社交媒体</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>帮助支持</h3>
+                    <ul>
+                        <li><a href="#">帮助中心</a></li>
+                        <li><a href="#">常见问题</a></li>
+                        <li><a href="#">网站提交</a></li>
+                        <li><a href="#">反馈建议</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>关注我们</h3>
+                    <ul>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="#"><i class="fab fa-weibo"></i> 微博</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> 邮箱订阅</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 WebHub 网站导航索引站. 保留所有权利. | 设计制作: WebHub Team</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 滚动到顶部按钮 -->
+    <div class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // 网站数据
+        const websites = {
+            google: {
+                title: "Google 搜索",
+                description: "全球最流行的搜索引擎，提供网页、图片、视频、新闻等多种搜索服务。",
+                url: "https://www.google.com"
+            },
+            github: {
+                title: "GitHub",
+                description: "全球最大的代码托管平台，用于版本控制和协作开发。",
+                url: "https://github.com"
+            },
+            youtube: {
+                title: "YouTube",
+                description: "全球最大的视频分享平台，提供各种类型的视频内容。",
+                url: "https://www.youtube.com"
+            },
+            stackoverflow: {
+                title: "Stack Overflow",
+                description: "程序员问答社区，解决编程开发中的各种技术问题。",
+                url: "https://stackoverflow.com"
+            },
+            twitter: {
+                title: "Twitter",
+                description: "社交媒体平台，用户可以发布和阅读短消息（推文）。",
+                url: "https://twitter.com"
+            },
+            linkedin: {
+                title: "LinkedIn",
+                description: "职业社交平台，用于建立职业联系和寻找工作机会。",
+                url: "https://www.linkedin.com"
+            },
+            bing: {
+                title: "Bing",
+                description: "微软推出的搜索引擎，提供网页、图片、视频等搜索服务。",
+                url: "https://www.bing.com"
+            },
+            baidu: {
+                title: "百度",
+                description: "中国最大的搜索引擎，提供中文搜索服务。",
+                url: "https://www.baidu.com"
+            },
+            duckduckgo: {
+                title: "DuckDuckGo",
+                description: "注重隐私保护的搜索引擎，不追踪用户搜索行为。",
+                url: "https://duckduckgo.com"
+            },
+            codepen: {
+                title: "CodePen",
+                description: "在线代码编辑器，用于前端开发代码的实时预览和分享。",
+                url: "https://codepen.io"
+            },
+            mdn: {
+                title: "MDN Web Docs",
+                description: "Mozilla开发者网络，提供Web开发技术文档和教程。",
+                url: "https://developer.mozilla.org"
+            },
+            coursera: {
+                title: "Coursera",
+                description: "在线学习平台，提供来自世界顶尖大学和公司的课程。",
+                url: "https://www.coursera.org"
+            },
+            udemy: {
+                title: "Udemy",
+                description: "在线学习平台，提供各种技能提升课程。",
+                url: "https://www.udemy.com"
+            },
+            khanacademy: {
+                title: "可汗学院",
+                description: "非营利教育组织，提供免费在线课程、练习和个性化学习面板。",
+                url: "https://www.khanacademy.org"
+            },
+            ted: {
+                title: "TED Talks",
+                description: "汇集各领域杰出人物的演讲，分享创新思想和见解。",
+                url: "https://www.ted.com"
+            },
+            facebook: {
+                title: "Facebook",
+                description: "全球最大的社交媒体平台，连接朋友、家人和社区。",
+                url: "https://www.facebook.com"
+            },
+            instagram: {
+                title: "Instagram",
+                description: "图片和视频分享社交媒体平台。",
+                url: "https://www.instagram.com"
+            },
+            bbc: {
+                title: "BBC News",
+                description: "英国广播公司新闻，提供全球新闻报道。",
+                url: "https://www.bbc.com/news"
+            },
+            cnn: {
+                title: "CNN",
+                description: "美国有线电视新闻网，提供国际新闻和时事分析。",
+                url: "https://edition.cnn.com"
+            },
+            reuters: {
+                title: "Reuters",
+                description: "路透社，全球最大的国际多媒体新闻机构之一。",
+                url: "https://www.reuters.com"
+            },
+            nytimes: {
+                title: "纽约时报",
+                description: "美国著名报纸，提供新闻、评论和特色内容。",
+                url: "https://www.nytimes.com"
+            },
+            netflix: {
+                title: "Netflix",
+                description: "流媒体服务，提供各种电影、电视剧和原创内容。",
+                url: "https://www.netflix.com"
+            },
+            spotify: {
+                title: "Spotify",
+                description: "音乐流媒体服务，提供数百万首歌曲和播客。",
+                url: "https://www.spotify.com"
+            },
+            twitch: {
+                title: "Twitch",
+                description: "游戏直播平台，也包含其他创意内容的直播。",
+                url: "https://www.twitch.tv"
+            },
+            wikipedia: {
+                title: "维基百科",
+                description: "自由内容、公开编辑且多语言的在线百科全书。",
+                url: "https://www.wikipedia.org"
+            },
+            reddit: {
+                title: "Reddit",
+                description: "社交新闻聚合、网络内容评级和讨论网站。",
+                url: "https://www.reddit.com"
+            }
+        };
+
+        // DOM元素
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const quickLinks = document.querySelectorAll('.quick-link');
+        const categoryLinks = document.querySelectorAll('.category-links a');
+        const websiteCard = document.getElementById('websiteCard');
+        const closeCard = document.getElementById('closeCard');
+        const cardTitle = document.getElementById('cardTitle');
+        const cardDescription = document.getElementById('cardDescription');
+        const visitLink = document.getElementById('visitLink');
+        const bookmarkLink = document.getElementById('bookmarkLink');
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+
+        // 移动端菜单切换
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            menuToggle.innerHTML = mainNav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // 点击网站链接显示卡片
+        function showWebsiteCard(siteKey) {
+            const site = websites[siteKey];
+            if (site) {
+                cardTitle.textContent = site.title;
+                cardDescription.textContent = site.description;
+                visitLink.href = site.url;
+                bookmarkLink.href = "#";
+                websiteCard.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // 为快速链接添加点击事件
+        quickLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const siteKey = link.getAttribute('data-site');
+                showWebsiteCard(siteKey);
+            });
+        });
+
+        // 为分类链接添加点击事件
+        categoryLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const siteKey = link.getAttribute('data-site');
+                showWebsiteCard(siteKey);
+            });
+        });
+
+        // 关闭网站卡片
+        closeCard.addEventListener('click', () => {
+            websiteCard.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        // 点击卡片外部关闭卡片
+        websiteCard.addEventListener('click', (e) => {
+            if (e.target === websiteCard) {
+                websiteCard.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // 搜索功能
+        searchBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim().toLowerCase();
+            if (query) {
+                // 简单搜索逻辑 - 在实际应用中会使用更复杂的搜索算法
+                let found = false;
+                for (const [key, site] of Object.entries(websites)) {
+                    if (site.title.toLowerCase().includes(query) || 
+                        site.description.toLowerCase().includes(query) ||
+                        key.includes(query)) {
+                        showWebsiteCard(key);
+                        found = true;
+                        break;
+                    }
+                }
+                
+                if (!found) {
+                    alert(`未找到与"${query}"相关的网站。请尝试其他关键词。`);
+                }
+            }
+        });
+
+        // 回车键搜索
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchBtn.click();
+            }
+        });
+
+        // 滚动到顶部按钮
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('active');
+            } else {
+                scrollToTopBtn.classList.remove('active');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 页面加载时显示欢迎信息
+        window.addEventListener('load', () => {
+            console.log('WebHub 网站导航已加载完成！');
+            searchInput.focus();
+        });
+
+        // 收藏功能
+        bookmarkLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const siteName = cardTitle.textContent;
+            alert(`已将 "${siteName}" 添加到收藏夹！`);
+            websiteCard.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    </script>
+</body>
+</html>
