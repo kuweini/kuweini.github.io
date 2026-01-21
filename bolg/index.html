@@ -1,1 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>静思博客 | 用心记录生活</title>
+    <style>
+        /* 重置样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* 导航栏 */
+        nav {
+            background: white;
+            padding: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        /* 主要内容区域 */
+        main {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        /* 博客文章列表 */
+        .blog-posts {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .post {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .post:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .post-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            transition: all 0.3s;
+        }
+
+        .post-title:hover {
+            color: #3498db;
+            cursor: pointer;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-excerpt {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .read-more {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .read-more:hover {
+            background: #2c80b9;
+            transform: translateY(-2px);
+        }
+
+        /* 侧边栏 */
+        .sidebar {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .sidebar h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sidebar-link {
+            display: block;
+            color: #3498db;
+            text-decoration: none;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .sidebar-link:hover {
+            color: #2c80b9;
+            padding-left: 5px;
+        }
+
+        .sidebar-link.active {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+
+        .search-box {
+            margin-top: 2rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem 0;
+            color: #7f8c8d;
+            border-top: 1px solid #eee;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 900px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .post-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>静思博客</h1>
+        <p>用心记录生活，分享思考与成长</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#" class="active">首页</a></li>
+            <li><a href="#">关于</a></li>
+            <li><a href="#">分类</a></li>
+            <li><a href="#">标签</a></li>
+            <li><a href="#">联系</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="blog-posts">
+            <!-- 博客文章1 -->
+            <article class="post">
+                <h2 class="post-title">如何开始你的第一篇博客</h2>
+                <div class="post-meta">
+                    <span>2026-01-21</span>
+                    <span>分类：博客入门</span>
+                </div>
+                <p class="post-excerpt">在数字时代，博客已成为分享思想、展示专业技能的绝佳平台。本文将带你了解如何从零开始创建自己的博客，包括选择平台、内容规划和初期运营技巧。</p>
+                <a href="#" class="read-more">阅读全文 →</a>
+            </article>
+
+            <!-- 博客文章2 -->
+            <article class="post">
+                <h2 class="post-title">前端开发的2026年趋势</h2>
+                <div class="post-meta">
+                    <span>2026-01-18</span>
+                    <span>分类：技术分享</span>
+                </div>
+                <p class="post-excerpt">2026年，前端开发将更加注重性能优化、无障碍访问和跨平台一致性。本文分析了当前热门框架、工具和未来发展方向，帮助开发者保持竞争力。</p>
+                <a href="#" class="read-more">阅读全文 →</a>
+            </article>
+
+            <!-- 博客文章3 -->
+            <article class="post">
+                <h2 class="post-title">生活中的小确幸：简单却温暖的日常</h2>
+                <div class="post-meta">
+                    <span>2026-01-15</span>
+                    <span>分类：生活随笔</span>
+                </div>
+                <p class="post-excerpt">在快节奏的生活中，我们常常忽略了那些微小却美好的瞬间。本文分享了作者在日常生活中发现的10个简单小确幸，让我们重新发现生活的美好。</p>
+                <a href="#" class="read-more">阅读全文 →</a>
+            </article>
+
+            <!-- 博客文章4 -->
+            <article class="post">
+                <h2 class="post-title">阅读的力量：如何培养深度阅读习惯</h2>
+                <div class="post-meta">
+                    <span>2026-01-10</span>
+                    <span>分类：个人成长</span>
+                </div>
+                <p class="post-excerpt">在信息爆炸的时代，深度阅读变得越来越珍贵。本文探讨了深度阅读的重要性，以及如何在日常生活中培养这一习惯，提升思维深度和知识积累。</p>
+                <a href="#" class="read-more">阅读全文 →</a>
+            </article>
+        </section>
+
+        <aside class="sidebar">
+            <h3>热门文章</h3>
+            <a href="#" class="sidebar-link active">如何开始你的第一篇博客</a>
+            <a href="#" class="sidebar-link">前端开发的2026年趋势</a>
+            <a href="#" class="sidebar-link">生活中的小确幸</a>
+            <a href="#" class="sidebar-link">阅读的力量</a>
+            
+            <h3 style="margin-top: 2rem;">分类</h3>
+            <a href="#" class="sidebar-link">博客入门 (4)</a>
+            <a href="#" class="sidebar-link">技术分享 (3)</a>
+            <a href="#" class="sidebar-link">生活随笔 (2)</a>
+            <a href="#" class="sidebar-link">个人成长 (3)</a>
+            
+            <h3 style="margin-top: 2rem;">搜索</h3>
+            <div class="search-box">
+                <input type="text" placeholder="搜索文章...">
+            </div>
+            
+            <h3 style="margin-top: 2rem;">标签云</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px;">
+                <span style="background: #e3f2fd; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">博客</span>
+                <span style="background: #e8f5e9; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">前端</span>
+                <span style="background: #fff8e1; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">生活</span>
+                <span style="background: #f8e1e1; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">成长</span>
+                <span style="background: #e1f5fe; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">阅读</span>
+            </div>
+        </aside>
+    </main>
+
+    <footer>
+        <p>© 2026 静思博客 | 用心记录生活，分享思考与成长</p>
+        <p>所有文章均为原创，转载需注明出处</p>
+    </footer>
+</body>
+  </html>
