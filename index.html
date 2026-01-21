@@ -5,38 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>静思博客 | 用心记录生活</title>
     <style>
-        /* 重置样式 */
+        /* 重置与通用样式 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
             line-height: 1.6;
-            color: #333;
-            background-color: #f5f7fa;
+            color: var(--dark);
+            background-color: var(--light);
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
 
         /* 头部样式 */
         header {
-            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+            background: linear-gradient(135deg, var(--primary), #1a2a6c);
             color: white;
-            padding: 2rem 0;
+            padding: 2.5rem 0;
             text-align: center;
-            border-radius: 0 0 10px 10px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
         }
 
         header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.5px;
         }
 
         header p {
@@ -44,60 +57,69 @@
             max-width: 800px;
             margin: 0 auto;
             opacity: 0.9;
+            font-weight: 300;
         }
 
         /* 导航栏 */
         nav {
             background: white;
-            padding: 1rem 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            margin-bottom: 2rem;
+            padding: 1.5rem 0;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         nav ul {
             display: flex;
             justify-content: center;
             list-style: none;
+            flex-wrap: wrap;
+            gap: 1.5rem;
         }
 
         nav li {
-            margin: 0 15px;
+            margin: 0;
         }
 
         nav a {
             text-decoration: none;
-            color: #2c3e50;
+            color: var(--primary);
             font-weight: 500;
-            transition: all 0.3s;
-            padding: 5px 10px;
-            border-radius: 4px;
+            font-size: 1.05rem;
+            padding: 8px 15px;
+            border-radius: 6px;
+            transition: var(--transition);
+            display: block;
         }
 
-        nav a:hover {
-            background: #3498db;
+        nav a:hover, nav a.active {
+            background: var(--secondary);
             color: white;
+            transform: translateY(-2px);
         }
 
         /* 主要内容区域 */
         main {
             display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 2rem;
+            grid-template-columns: 1fr 320px;
+            gap: 2.5rem;
         }
 
         /* 博客文章列表 */
         .blog-posts {
             background: white;
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
         }
 
         .post {
-            margin-bottom: 2.5rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 3.5rem;
+            padding-bottom: 3.5rem;
+            border-bottom: 1px solid var(--light-gray);
         }
 
         .post:last-child {
@@ -108,108 +130,195 @@
 
         .post-title {
             font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            color: #2c3e50;
-            transition: all 0.3s;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            transition: var(--transition);
         }
 
         .post-title:hover {
-            color: #3498db;
+            color: var(--secondary);
             cursor: pointer;
         }
 
         .post-meta {
             display: flex;
             justify-content: space-between;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .post-excerpt {
             font-size: 1.1rem;
-            color: #555;
+            color: #495057;
             line-height: 1.7;
+            margin-bottom: 1.5rem;
         }
 
         .read-more {
             display: inline-block;
-            background: #3498db;
+            background: var(--secondary);
             color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
+            padding: 10px 22px;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: 500;
-            transition: all 0.3s;
-            margin-top: 10px;
+            transition: var(--transition);
+            border: 2px solid var(--secondary);
         }
 
         .read-more:hover {
-            background: #2c80b9;
+            background: transparent;
+            color: var(--secondary);
             transform: translateY(-2px);
         }
 
         /* 侧边栏 */
         .sidebar {
             background: white;
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
         }
 
         .sidebar h3 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 1.5rem;
-            color: #2c3e50;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #eee;
+            color: var(--primary);
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--secondary);
         }
 
         .sidebar-link {
             display: block;
-            color: #3498db;
+            color: var(--primary);
             text-decoration: none;
-            margin-bottom: 0.8rem;
-            transition: all 0.3s;
+            margin-bottom: 1.2rem;
+            transition: var(--transition);
             font-weight: 500;
+            padding: 6px 0;
+            border-radius: 4px;
         }
 
         .sidebar-link:hover {
-            color: #2c80b9;
+            color: var(--secondary);
             padding-left: 5px;
         }
 
         .sidebar-link.active {
-            color: #e74c3c;
+            color: var(--accent);
             font-weight: 600;
         }
 
         .search-box {
-            margin-top: 2rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            margin-top: 2.5rem;
+            background: var(--light);
+            border-radius: 10px;
             overflow: hidden;
         }
 
         .search-box input {
             width: 100%;
-            padding: 10px;
+            padding: 12px 15px;
             border: none;
             outline: none;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            background: transparent;
+            color: var(--dark);
+        }
+
+        .categories h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-list li {
+            margin-bottom: 0.8rem;
+        }
+
+        .category-list a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .category-list a:hover {
+            color: var(--secondary);
+            padding-left: 3px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            background: #e3f2fd;
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .tag:hover {
+            background: var(--secondary);
+            color: white;
         }
 
         /* 页脚 */
         footer {
             text-align: center;
-            margin-top: 3rem;
-            padding: 1.5rem 0;
-            color: #7f8c8d;
-            border-top: 1px solid #eee;
+            margin-top: 4rem;
+            padding: 2rem 0;
+            color: var(--gray);
+            border-top: 1px solid var(--light-gray);
         }
 
-        /* 响应式调整 */
-        @media (max-width: 900px) {
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        footer .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--gray);
+            font-size: 1.3rem;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--light);
+        }
+
+        .social-links a:hover {
+            color: var(--secondary);
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
             main {
                 grid-template-columns: 1fr;
             }
@@ -219,13 +328,35 @@
             }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             header h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             
             .post-title {
                 font-size: 1.5rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .read-more {
+                padding: 8px 18px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .post-title {
+                font-size: 1.3rem;
+            }
+            
+            .read-more {
+                padding: 7px 15px;
             }
         }
     </style>
@@ -239,10 +370,11 @@
     <nav>
         <ul>
             <li><a href="#" class="active">首页</a></li>
+            <li><a href="#">技术</a></li>
+            <li><a href="#">生活</a></li>
+            <li><a href="#">旅行</a></li>
+            <li><a href="#">个人成长</a></li>
             <li><a href="#">关于</a></li>
-            <li><a href="#">分类</a></li>
-            <li><a href="#">标签</a></li>
-            <li><a href="#">联系</a></li>
         </ul>
     </nav>
 
@@ -253,7 +385,7 @@
                 <h2 class="post-title">如何开始你的第一篇博客</h2>
                 <div class="post-meta">
                     <span>2026-01-21</span>
-                    <span>分类：博客入门</span>
+                    <span>技术</span>
                 </div>
                 <p class="post-excerpt">在数字时代，博客已成为分享思想、展示专业技能的绝佳平台。本文将带你了解如何从零开始创建自己的博客，包括选择平台、内容规划和初期运营技巧。</p>
                 <a href="#" class="read-more">阅读全文 →</a>
@@ -264,7 +396,7 @@
                 <h2 class="post-title">前端开发的2026年趋势</h2>
                 <div class="post-meta">
                     <span>2026-01-18</span>
-                    <span>分类：技术分享</span>
+                    <span>技术</span>
                 </div>
                 <p class="post-excerpt">2026年，前端开发将更加注重性能优化、无障碍访问和跨平台一致性。本文分析了当前热门框架、工具和未来发展方向，帮助开发者保持竞争力。</p>
                 <a href="#" class="read-more">阅读全文 →</a>
@@ -275,7 +407,7 @@
                 <h2 class="post-title">生活中的小确幸：简单却温暖的日常</h2>
                 <div class="post-meta">
                     <span>2026-01-15</span>
-                    <span>分类：生活随笔</span>
+                    <span>生活</span>
                 </div>
                 <p class="post-excerpt">在快节奏的生活中，我们常常忽略了那些微小却美好的瞬间。本文分享了作者在日常生活中发现的10个简单小确幸，让我们重新发现生活的美好。</p>
                 <a href="#" class="read-more">阅读全文 →</a>
@@ -286,7 +418,7 @@
                 <h2 class="post-title">阅读的力量：如何培养深度阅读习惯</h2>
                 <div class="post-meta">
                     <span>2026-01-10</span>
-                    <span>分类：个人成长</span>
+                    <span>个人成长</span>
                 </div>
                 <p class="post-excerpt">在信息爆炸的时代，深度阅读变得越来越珍贵。本文探讨了深度阅读的重要性，以及如何在日常生活中培养这一习惯，提升思维深度和知识积累。</p>
                 <a href="#" class="read-more">阅读全文 →</a>
@@ -300,24 +432,32 @@
             <a href="#" class="sidebar-link">生活中的小确幸</a>
             <a href="#" class="sidebar-link">阅读的力量</a>
             
-            <h3 style="margin-top: 2rem;">分类</h3>
-            <a href="#" class="sidebar-link">博客入门 (4)</a>
-            <a href="#" class="sidebar-link">技术分享 (3)</a>
-            <a href="#" class="sidebar-link">生活随笔 (2)</a>
-            <a href="#" class="sidebar-link">个人成长 (3)</a>
-            
-            <h3 style="margin-top: 2rem;">搜索</h3>
-            <div class="search-box">
-                <input type="text" placeholder="搜索文章...">
+            <h3>分类</h3>
+            <div class="categories">
+                <h4>文章分类</h4>
+                <ul class="category-list">
+                    <li><a href="#">技术 (4)</a></li>
+                    <li><a href="#">生活 (3)</a></li>
+                    <li><a href="#">旅行 (2)</a></li>
+                    <li><a href="#">个人成长 (3)</a></li>
+                    <li><a href="#">博客入门 (1)</a></li>
+                </ul>
             </div>
             
-            <h3 style="margin-top: 2rem;">标签云</h3>
-            <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px;">
-                <span style="background: #e3f2fd; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">博客</span>
-                <span style="background: #e8f5e9; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">前端</span>
-                <span style="background: #fff8e1; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">生活</span>
-                <span style="background: #f8e1e1; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">成长</span>
-                <span style="background: #e1f5fe; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">阅读</span>
+            <h3>标签云</h3>
+            <div class="tags">
+                <a href="#" class="tag">博客</a>
+                <a href="#" class="tag">前端</a>
+                <a href="#" class="tag">生活</a>
+                <a href="#" class="tag">成长</a>
+                <a href="#" class="tag">阅读</a>
+                <a href="#" class="tag">开发</a>
+                <a href="#" class="tag">设计</a>
+                <a href="#" class="tag">分享</a>
+            </div>
+            
+            <div class="search-box">
+                <input type="text" placeholder="搜索文章...">
             </div>
         </aside>
     </main>
@@ -325,6 +465,12 @@
     <footer>
         <p>© 2026 静思博客 | 用心记录生活，分享思考与成长</p>
         <p>所有文章均为原创，转载需注明出处</p>
+        <div class="social-links">
+            <a href="#" aria-label="Twitter"><i>🐦</i></a>
+            <a href="#" aria-label="Facebook"><i>📘</i></a>
+            <a href="#" aria-label="Instagram"><i>📸</i></a>
+            <a href="#" aria-label="LinkedIn"><i>💼</i></a>
+        </div>
     </footer>
 </body>
 </html>
