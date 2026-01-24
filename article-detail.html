@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>现代JavaScript开发最佳实践 | 个人博客</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
+            color: white;
+            padding: 60px 0 40px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .header-content p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 20px;
+            opacity: 0.9;
+        }
+        
+        /* 导航栏 */
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #3498db;
+        }
+        
+        /* 返回首页按钮 */
+        .back-to-home {
+            display: inline-block;
+            margin-top: 20px;
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .back-to-home:hover {
+            background-color: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
+        }
+        
+        /* 文章详情区域 */
+        .article-detail-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+        
+        /* 文章主体 */
+        .article-detail {
+            flex: 3;
+            min-width: 300px;
+            margin-right: 40px;
+        }
+        
+        .article-detail-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .article-detail-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        
+        .article-detail-content {
+            padding: 40px;
+        }
+        
+        .article-detail-meta {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .article-detail-meta span {
+            margin-right: 20px;
+        }
+        
+        .article-detail-tag {
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        
+        .article-detail-title {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            line-height: 1.3;
+        }
+        
+        .article-detail-excerpt {
+            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            font-style: italic;
+        }
+        
+        .article-body {
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        
+        .article-body h2 {
+            font-size: 1.6rem;
+            margin: 30px 0 15px;
+            color: #2c3e50;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .article-body h3 {
+            font-size: 1.3rem;
+            margin: 25px 0 12px;
+            color: #2c3e50;
+        }
+        
+        .article-body p {
+            margin-bottom: 20px;
+        }
+        
+        .article-body ul, .article-body ol {
+            margin-bottom: 20px;
+            padding-left: 30px;
+        }
+        
+        .article-body li {
+            margin-bottom: 8px;
+        }
+        
+        .article-body blockquote {
+            border-left: 4px solid #3498db;
+            padding-left: 20px;
+            margin: 25px 0;
+            font-style: italic;
+            color: #555;
+            background-color: #f9f9f9;
+            padding: 15px 20px;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .article-body code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+        
+        .article-body pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 25px 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        .article-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #555;
+            transition: all 0.3s;
+            border: 1px solid #eee;
+        }
+        
+        .nav-btn:hover {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        
+        /* 侧边栏 */
+        aside {
+            flex: 1;
+            min-width: 280px;
+        }
+        
+        .sidebar-widget {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .widget-title {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        .about-me {
+            text-align: center;
+        }
+        
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 5px solid #ecf0f1;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .social-icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            text-align: center;
+            line-height: 40px;
+            margin: 0 5px;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background-color: #3498db;
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .category-list {
+            list-style: none;
+        }
+        
+        .category-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .category-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .category-list a {
+            text-decoration: none;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .category-list a:hover {
+            color: #3498db;
+        }
+        
+        .category-count {
+            background-color: #ecf0f1;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+        
+        .recent-post {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .recent-post:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .recent-post img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+        
+        .recent-post-content h4 {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: #3498db;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #3a506b;
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .article-detail {
+                margin-right: 0;
+            }
+            
+            .article-detail-container {
+                flex-direction: column;
+            }
+            
+            aside {
+                margin-top: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+            }
+            
+            .nav-links li {
+                margin: 0 10px;
+            }
+            
+            .header-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .article-detail-title {
+                font-size: 1.8rem;
+            }
+            
+            .article-detail-content {
+                padding: 25px;
+            }
+            
+            .article-detail-img {
+                height: 250px;
+            }
+            
+            .article-navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+        
+        /* 回到顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .back-to-top:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 回到顶部按钮 -->
+    <a href="#" class="back-to-top" id="backToTop" style="display: none;">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    
+    <!-- 头部区域 -->
+    <header>
+        <div class="container header-content">
+            <h1>探索与分享</h1>
+            <p>一个专注于技术、生活与思考的个人博客。记录学习历程，分享生活感悟，探索数字世界的无限可能。</p>
+            <a href="index.html" class="back-to-home"><i class="fas fa-arrow-left"></i> 返回首页</a>
+        </div>
+    </header>
+    
+    <!-- 导航栏 -->
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">个人博客</a>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> 首页</a></li>
+                <li><a href="#"><i class="fas fa-th-large"></i> 分类</a></li>
+                <li><a href="#"><i class="fas fa-tags"></i> 标签</a></li>
+                <li><a href="#"><i class="fas fa-archive"></i> 归档</a></li>
+                <li><a href="about.html"><i class="fas fa-user"></i> 关于</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- 文章详情 -->
+    <div class="container">
+        <div class="article-detail-container">
+            <!-- 文章主体 -->
+            <article class="article-detail">
+                <div class="article-detail-card">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="现代JavaScript开发" class="article-detail-img">
+                    <div class="article-detail-content">
+                        <div class="article-detail-meta">
+                            <span><i class="far fa-calendar"></i> 2023年10月15日</span>
+                            <span><i class="far fa-eye"></i> 1,245 阅读</span>
+                            <span><i class="far fa-clock"></i> 阅读时间: 8分钟</span>
+                        </div>
+                        <div>
+                            <span class="article-detail-tag">技术</span>
+                            <span class="article-detail-tag">编程</span>
+                            <span class="article-detail-tag">JavaScript</span>
+                            <span class="article-detail-tag">前端开发</span>
+                            <span class="article-detail-tag">最佳实践</span>
+                        </div>
+                        <h1 class="article-detail-title">现代JavaScript开发最佳实践</h1>
+                        <p class="article-detail-excerpt">随着前端技术的快速发展，JavaScript已经不再是简单的脚本语言。本文总结了现代JavaScript开发中的最佳实践，包括模块化、异步编程、性能优化等方面，帮助开发者写出更健壮、可维护的代码。</p>
+                        
+                        <div class="article-body">
+                            <p>JavaScript自1995年诞生以来，已经从一种简单的脚本语言发展成为现代Web开发的核心技术。随着ECMAScript标准的不断更新和前端工程化的发展，JavaScript开发的最佳实践也在不断演进。本文将深入探讨现代JavaScript开发中的关键实践，帮助开发者提高代码质量、可维护性和性能。</p>
+                            
+                            <h2>1. 模块化开发</h2>
+                            <p>在ES6之前，JavaScript缺乏原生的模块系统，开发者不得不依赖CommonJS、AMD等社区方案。ES6模块的引入彻底改变了这一局面。</p>
+                            
+                            <p>使用ES6模块的好处：</p>
+                            <ul>
+                                <li><strong>显式依赖声明</strong>：通过<code>import</code>和<code>export</code>语句明确模块间的依赖关系</li>
+                                <li><strong>静态分析</strong>：工具可以静态分析模块依赖，实现tree-shaking等优化</li>
+                                <li><strong>作用域隔离</strong>：每个模块拥有独立的作用域，避免全局污染</li>
+                            </ul>
+                            
+                            <pre><code>// 模块导出
+export const API_URL = 'https://api.example.com';
+export function fetchData() {
+    // 数据获取逻辑
+}
+
+// 模块导入
+import { API_URL, fetchData } from './api.js';</code></pre>
+                            
+                            <h2>2. 异步编程的最佳实践</h2>
+                            <p>异步编程是JavaScript的核心特性之一，从回调函数到Promise，再到async/await，异步处理方式不断演进。</p>
+                            
+                            <h3>2.1 优先使用async/await</h3>
+                            <p>async/await语法让异步代码看起来像同步代码，大大提高了可读性：</p>
+                            
+                            <pre><code>// 传统Promise方式
+function getUserData(userId) {
+    return fetch(`/api/users/${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            return data;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+// 使用async/await
+async function getUserData(userId) {
+    try {
+        const response = await fetch(`/api/users/${userId}`);
+        const data = await response.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}</code></pre>
+                            
+                            <h3>2.2 并行处理优化</h3>
+                            <p>当多个异步操作可以并行执行时，使用<code>Promise.all()</code>可以显著提高性能：</p>
+                            
+                            <pre><code>async function fetchAllUserData(userIds) {
+    // 串行执行 - 效率低
+    // for (const id of userIds) {
+    //     await fetchUserData(id);
+    // }
+    
+    // 并行执行 - 效率高
+    const promises = userIds.map(id => fetchUserData(id));
+    const results = await Promise.all(promises);
+    return results;
+}</code></pre>
+                            
+                            <h2>3. 函数式编程思想</h2>
+                            <p>函数式编程（FP）思想在JavaScript中的应用越来越广泛，它强调使用纯函数、不可变数据和函数组合。</p>
+                            
+                            <h3>3.1 纯函数</h3>
+                            <p>纯函数是指给定相同输入总是返回相同输出，并且没有副作用的函数：</p>
+                            
+                            <pre><code>// 非纯函数 - 有副作用
+let taxRate = 0.1;
+function calculateTax(amount) {
+    return amount * taxRate; // 依赖外部变量
+}
+
+// 纯函数
+function calculateTax(amount, rate) {
+    return amount * rate;
+}</code></pre>
+                            
+                            <h3>3.2 不可变数据</h3>
+                            <p>使用不可变数据可以避免意外的副作用，提高代码的可预测性：</p>
+                            
+                            <pre><code>// 可变操作
+const user = { name: 'Alice', age: 30 };
+user.age = 31; // 直接修改原对象
+
+// 不可变操作
+const updatedUser = { ...user, age: 31 }; // 创建新对象</code></pre>
+                            
+                            <h2>4. 性能优化技巧</h2>
+                            <p>现代JavaScript应用对性能要求越来越高，以下是一些关键的性能优化实践：</p>
+                            
+                            <h3>4.1 防抖和节流</h3>
+                            <p>对于频繁触发的事件（如滚动、输入），使用防抖（debounce）和节流（throttle）可以优化性能：</p>
+                            
+                            <pre><code>// 节流函数
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}
+
+// 使用节流
+window.addEventListener('scroll', throttle(() => {
+    console.log('Scrolled');
+}, 200));</code></pre>
+                            
+                            <h3>4.2 虚拟滚动</h3>
+                            <p>对于长列表，使用虚拟滚动技术可以显著减少DOM节点数量，提高渲染性能：</p>
+                            
+                            <blockquote>
+                                <p>虚拟滚动通过只渲染可视区域内的列表项，大幅减少了DOM操作和内存使用，是现代前端应用优化长列表性能的必备技术。</p>
+                            </blockquote>
+                            
+                            <h2>5. 代码质量和可维护性</h2>
+                            <p>写出高质量的JavaScript代码不仅需要关注功能实现，还需要考虑可维护性和团队协作。</p>
+                            
+                            <h3>5.1 使用TypeScript</h3>
+                            <p>TypeScript为JavaScript添加了静态类型系统，可以在编译时发现潜在错误：</p>
+                            
+                            <pre><code>// TypeScript示例
+interface User {
+    id: number;
+    name: string;
+    email: string;
+}
+
+function getUser(id: number): Promise&lt;User&gt; {
+    return fetch(`/api/users/${id}`)
+        .then(response => response.json());
+}</code></pre>
+                            
+                            <h3>5.2 代码风格统一</h3>
+                            <p>使用ESLint和Prettier等工具确保团队代码风格一致：</p>
+                            <ul>
+                                <li>ESLint：静态代码分析，发现潜在问题</li>
+                                <li>Prettier：自动格式化代码，保持风格统一</li>
+                                <li>Husky + lint-staged：Git提交前自动检查代码</li>
+                            </ul>
+                            
+                            <h2>总结</h2>
+                            <p>现代JavaScript开发已经进入了工程化、规范化的新阶段。掌握模块化开发、异步编程优化、函数式编程思想、性能优化技巧以及代码质量工具的使用，是成为一名优秀JavaScript开发者的关键。随着技术的不断发展，我们需要持续学习新的最佳实践，但上述这些核心原则将在相当长的时间内保持其重要性。</p>
+                            
+                            <p>记住，最佳实践的目的是为了提高代码的可读性、可维护性和性能，而不是为了追求技术的新颖性。在实际项目中，应根据具体需求和团队情况灵活应用这些实践。</p>
+                        </div>
+                        
+                        <!-- 文章导航 -->
+                        <div class="article-navigation">
+                            <a href="#" class="nav-btn"><i class="fas fa-arrow-left"></i> 上一篇文章：Python数据处理入门指南</a>
+                            <a href="#" class="nav-btn">下一篇文章：React Hooks深度解析 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- 侧边栏 -->
+            <aside>
+                <!-- 关于我 -->
+                <div class="sidebar-widget about-me">
+                    <h3 class="widget-title">关于我</h3>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80" alt="博主头像" class="profile-img">
+                    <p>一个热爱技术、阅读与旅行的写作者。相信知识分享的力量，希望通过文字记录思考，连接更多有趣的灵魂。</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-weibo"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-zhihu"></i></a>
+                    </div>
+                </div>
+                
+                <!-- 文章分类 -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">文章分类</h3>
+                    <ul class="category-list">
+                        <li><a href="#">技术开发 <span class="category-count">18</span></a></li>
+                        <li><a href="#">生活随笔 <span class="category-count">12</span></a></li>
+                        <li><a href="#">阅读书评 <span class="category-count">8</span></a></li>
+                        <li><a href="#">旅行摄影 <span class="category-count">5</span></a></li>
+                        <li><a href="#">思考杂谈 <span class="category-count">9</span></a></li>
+                    </ul>
+                </div>
+                
+                <!-- 最新文章 -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">最新文章</h3>
+                    <div class="recent-post">
+                        <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&q=80" alt="最近文章">
+                        <div class="recent-post-content">
+                            <h4>Python数据处理入门指南</h4>
+                            <span class="article-meta">2023.10.08</span>
+                        </div>
+                    </div>
+                    <div class="recent-post">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&q=80" alt="最近文章">
+                        <div class="recent-post-content">
+                            <h4>登山记：寻找城市之外的山野</h4>
+                            <span class="article-meta">2023.09.22</span>
+                        </div>
+                    </div>
+                    <div class="recent-post">
+                        <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&q=80" alt="最近文章">
+                        <div class="recent-post-content">
+                            <h4>远程工作三年的心得与挑战</h4>
+                            <span class="article-meta">2023.09.05</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于博客</h3>
+                    <p>这是一个个人博客，记录技术学习、生活感悟和思考探索。希望这里的内容能为你带来一些启发和帮助。</p>
+                </div>
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="#">文章分类</a></li>
+                        <li><a href="#">标签云</a></li>
+                        <li><a href="#">时间归档</a></li>
+                        <li><a href="#">关于我</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>联系我</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> contact@example.com</li>
+                        <li><i class="fab fa-github"></i> GitHub</li>
+                        <li><i class="fab fa-weibo"></i> 微博</li>
+                        <li><i class="fab fa-twitter"></i> Twitter</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 个人博客. 保留所有权利. 主题设计 by 个人博客</p>
+                <p>本博客由纯HTML+CSS构建，感谢 Unsplash 提供图片素材</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // JavaScript交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTop = document.getElementById('backToTop');
+            
+            // 显示/隐藏回到顶部按钮
+            function toggleBackToTop() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > 500) {
+                    backToTop.style.display = 'flex';
+                    setTimeout(() => {
+                        backToTop.classList.add('visible');
+                    }, 10);
+                } else {
+                    backToTop.classList.remove('visible');
+                    setTimeout(() => {
+                        backToTop.style.display = 'none';
+                    }, 300);
+                }
+            }
+            
+            window.addEventListener('scroll', toggleBackToTop);
+            toggleBackToTop(); // 初始化
+            
+            // 回到顶部功能
+            backToTop.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // 文章导航按钮交互
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const direction = this.textContent.includes('上一篇文章') ? '上一篇' : '下一篇';
+                    alert(`在实际博客中，这里会跳转到${direction}文章`);
+                });
+            });
+            
+            // 侧边栏分类点击效果
+            const categoryItems = document.querySelectorAll('.category-list a');
+            categoryItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const category = this.textContent.split(' ')[0];
+                    alert(`在实际博客中，这里会跳转到"${category}"分类页面`);
+                });
+            });
+            
+            // 最新文章点击效果
+            const recentPosts = document.querySelectorAll('.recent-post');
+            recentPosts.forEach(post => {
+                post.addEventListener('click', function() {
+                    const title = this.querySelector('h4').textContent;
+                    alert(`在实际博客中，这里会跳转到"${title}"文章详情页`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
