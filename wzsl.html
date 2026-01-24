@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>站长网址收藏库</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding-bottom: 40px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(to right, #4a6fa5, #2c3e50);
+            color: white;
+            padding: 30px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: #64b5f6;
+        }
+        
+        .logo h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .logo span {
+            color: #64b5f6;
+        }
+        
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .admin-info i {
+            font-size: 1.5rem;
+            color: #64b5f6;
+        }
+        
+        .admin-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        /* 分类导航 */
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            justify-content: center;
+        }
+        
+        .category-btn {
+            background: #f0f4f8;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #4a6fa5;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background: #4a6fa5;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .card h2 i {
+            color: #4a6fa5;
+        }
+        
+        /* 网站列表样式 */
+        .website-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        
+        .website-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .website-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+            border-color: #4a6fa5;
+        }
+        
+        .website-favicon {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .website-favicon img {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            margin-right: 20px;
+            object-fit: cover;
+            border: 1px solid #dee2e6;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .website-favicon h3 {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            flex-grow: 1;
+        }
+        
+        .website-info {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .website-url {
+            color: #4a6fa5;
+            text-decoration: none;
+            font-weight: 600;
+            word-break: break-all;
+            display: block;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .website-url:hover {
+            text-decoration: underline;
+            color: #3a5980;
+        }
+        
+        .website-desc {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .website-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: auto;
+        }
+        
+        .tag {
+            background: #e9f2ff;
+            color: #4a6fa5;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .tag:hover {
+            background: #d4e5ff;
+            transform: scale(1.05);
+        }
+        
+        .category-tag {
+            background: #4a6fa5;
+            color: white;
+        }
+        
+        .category-tag:hover {
+            background: #3a5980;
+        }
+        
+        .website-date {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* 统计数据 */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4a6fa5;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 8px;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #666;
+            font-size: 0.95rem;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 25px;
+            }
+            
+            .website-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .website-favicon h3 {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .category-nav {
+                justify-content: center;
+            }
+            
+            .category-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .website-favicon {
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+                text-align: center;
+            }
+            
+            .website-favicon img {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+        
+        /* 空状态样式 */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
+            color: #4a6fa5;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-bookmark"></i>
+                    <div>
+                        <h1>站长<span>网址库</span></h1>
+                        <p class="tagline">个人常用网址收藏与整理</p>
+                    </div>
+                </div>
+                <div class="admin-info">
+                    <i class="fas fa-user-tie"></i>
+                    <div>
+                        <div class="admin-name">站长专用</div>
+                        <div>静态收录版本</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- 统计数据 -->
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="totalCount">16</div>
+                <div class="stat-label">收录网站</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="categoryCount">7</div>
+                <div class="stat-label">分类标签</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">2023.12</div>
+                <div class="stat-label">最后更新</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">V1.0</div>
+                <div class="stat-label">当前版本</div>
+            </div>
+        </div>
+        
+        <!-- 分类导航 -->
+        <div class="category-nav">
+            <button class="category-btn active" data-category="all">全部网站</button>
+            <button class="category-btn" data-category="技术">技术开发</button>
+            <button class="category-btn" data-category="设计">设计创意</button>
+            <button class="category-btn" data-category="工具">实用工具</button>
+            <button class="category-btn" data-category="资源">资源素材</button>
+            <button class="category-btn" data-category="资讯">新闻资讯</button>
+            <button class="category-btn" data-category="社区">社区交流</button>
+            <button class="category-btn" data-category="其他">其他分类</button>
+        </div>
+        
+        <!-- 网站列表 -->
+        <div class="card">
+            <h2><i class="fas fa-th-list"></i> 收录网站列表</h2>
+            <div class="website-list" id="websiteList">
+                <!-- 网站项目将通过JavaScript动态生成 -->
+            </div>
+        </div>
+    </div>
+    
+    <footer class="container">
+        <p>© 2023 站长网址收藏库 - 静态版本 | 仅供个人使用</p>
+        <p>如需修改收录内容，请直接编辑HTML文件中的网站数据</p>
+    </footer>
+
+    <script>
+        // 网站数据 - 站长可以在这里直接修改和添加网站
+        const websites = [
+            {
+                id: 1,
+                name: "GitHub",
+                url: "https://github.com",
+                description: "全球最大的代码托管平台，用于版本控制和协作开发，程序员必备工具",
+                category: "技术",
+                tags: ["编程", "开源", "开发工具", "代码托管"],
+                favicon: "https://github.githubassets.com/favicon.ico",
+                addedDate: "2023-11-10"
+            },
+            {
+                id: 2,
+                name: "MDN Web Docs",
+                url: "https://developer.mozilla.org",
+                description: "Mozilla开发者网络，提供最全面的Web技术文档、教程和API参考",
+                category: "技术",
+                tags: ["文档", "前端开发", "API", "教程", "Web开发"],
+                favicon: "https://developer.mozilla.org/favicon.ico",
+                addedDate: "2023-11-12"
+            },
+            {
+                id: 3,
+                name: "Stack Overflow",
+                url: "https://stackoverflow.com",
+                description: "全球最大的程序员问答社区，遇到编程问题首先想到的求助平台",
+                category: "社区",
+                tags: ["问答", "编程", "解决问题", "社区"],
+                favicon: "https://stackoverflow.com/favicon.ico",
+                addedDate: "2023-11-05"
+            },
+            {
+                id: 4,
+                name: "Dribbble",
+                url: "https://dribbble.com",
+                description: "全球设计师分享作品、获取灵感的设计社区，UI/UX设计风向标",
+                category: "设计",
+                tags: ["设计", "创意", "UI/UX", "灵感", "视觉设计"],
+                favicon: "https://cdn.dribbble.com/assets/favicon-b38525134603b9523177d5f7a80c8c8b4d8ef92c4b7e3f7a4587b2e3c8c43d5.ico",
+                addedDate: "2023-10-28"
+            },
+            {
+                id: 5,
+                name: "Unsplash",
+                url: "https://unsplash.com",
+                description: "高质量免费图片素材网站，摄影师分享作品的首选平台，图片资源丰富",
+                category: "资源",
+                tags: ["图片", "素材", "摄影", "免费", "高清"],
+                favicon: "https://unsplash.com/favicon.ico",
+                addedDate: "2023-10-22"
+            },
+            {
+                id: 6,
+                name: "Canva",
+                url: "https://canva.com",
+                description: "在线设计平台，提供海量设计模板，简单易用的图形设计工具",
+                category: "工具",
+                tags: ["设计工具", "模板", "在线编辑", "图形设计", "易用"],
+                favicon: "https://static.canva.com/static/images/favicon.ico",
+                addedDate: "2023-11-08"
+            },
+            {
+                id: 7,
+                name: "知乎",
+                url: "https://zhihu.com",
+                description: "中文互联网高质量的问答社区和创作者聚集的原创内容平台",
+                category: "社区",
+                tags: ["问答", "知识", "社区", "资讯", "中文"],
+                favicon: "https://static.zhihu.com/heifetz/favicon.ico",
+                addedDate: "2023-10-15"
+            },
+            {
+                id: 8,
+                name: "CSS-Tricks",
+                url: "https://css-tricks.com",
+                description: "专注于CSS技术和前端开发技巧的博客，提供大量实用教程和示例",
+                category: "技术",
+                tags: ["CSS", "前端", "教程", "技巧", "Web开发"],
+                favicon: "https://css-tricks.com/favicon.ico",
+                addedDate: "2023-11-14"
+            },
+            {
+                id: 9,
+                name: "Google Fonts",
+                url: "https://fonts.google.com",
+                description: "Google提供的免费开源字体库，网页设计字体资源首选",
+                category: "资源",
+                tags: ["字体", "资源", "免费", "网页设计", "开源"],
+                favicon: "https://fonts.gstatic.com/s/i/productlogos/google_fonts/v1/192px.svg",
+                addedDate: "2023-10-30"
+            },
+            {
+                id: 10,
+                name: "Figma",
+                url: "https://figma.com",
+                description: "强大的在线UI设计工具，支持多人协作，设计师必备工具",
+                category: "设计",
+                tags: ["UI设计", "工具", "协作", "原型设计", "在线"],
+                favicon: "https://static.figma.com/app/icon/1/touch-180.png",
+                addedDate: "2023-11-01"
+            },
+            {
+                id: 11,
+                name: "V2EX",
+                url: "https://v2ex.com",
+                description: "创意工作者社区，讨论编程、设计、硬件等话题的技术社区",
+                category: "社区",
+                tags: ["技术社区", "创意", "讨论", "分享", "中文"],
+                favicon: "https://v2ex.com/static/icon-192.png",
+                addedDate: "2023-10-18"
+            },
+            {
+                id: 12,
+                name: "Codepen",
+                url: "https://codepen.io",
+                description: "前端代码在线编辑和展示平台，分享HTML/CSS/JavaScript代码片段的社区",
+                category: "技术",
+                tags: ["代码", "前端", "在线编辑", "分享", "示例"],
+                favicon: "https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico",
+                addedDate: "2023-11-03"
+            },
+            {
+                id: 13,
+                name: "Product Hunt",
+                url: "https://producthunt.com",
+                description: "发现新产品和创业项目的平台，了解最新科技产品趋势",
+                category: "资讯",
+                tags: ["产品", "创业", "科技", "发现", "趋势"],
+                favicon: "https://www.producthunt.com/favicon.ico",
+                addedDate: "2023-10-25"
+            },
+            {
+                id: 14,
+                name: "Notion",
+                url: "https://notion.so",
+                description: "一体化工作空间，笔记、任务、数据库、wiki等功能于一身的生产力工具",
+                category: "工具",
+                tags: ["生产力", "笔记", "协作", "组织", "工具"],
+                favicon: "https://www.notion.so/images/favicon.ico",
+                addedDate: "2023-11-07"
+            },
+            {
+                id: 15,
+                name: "IconFont",
+                url: "https://iconfont.cn",
+                description: "阿里巴巴矢量图标库，提供海量图标资源，支持在线编辑和下载",
+                category: "资源",
+                tags: ["图标", "资源", "矢量", "免费", "中文"],
+                favicon: "https://img.alicdn.com/imgextra/i4/O1CN01Z5paLz1O0zuCC7osS_!!6000000001644-55-tps-83-82.svg",
+                addedDate: "2023-10-20"
+            },
+            {
+                id: 16,
+                name: "ChatGPT",
+                url: "https://chat.openai.com",
+                description: "OpenAI开发的AI对话模型，辅助编程、写作、学习等多种任务",
+                category: "工具",
+                tags: ["AI", "对话", "辅助工具", "智能", "生产力"],
+                favicon: "https://chat.openai.com/favicon-32x32.png",
+                addedDate: "2023-11-15"
+            }
+        ];
+        
+        // 渲染网站列表
+        function renderWebsites(filterCategory = 'all') {
+            const websiteList = document.getElementById('websiteList');
+            
+            // 过滤网站
+            let filteredWebsites = websites;
+            if (filterCategory !== 'all') {
+                filteredWebsites = websites.filter(website => website.category === filterCategory);
+            }
+            
+            // 按添加日期排序（最新的在前）
+            filteredWebsites.sort((a, b) => new Date(b.addedDate) - new Date(a.addedDate));
+            
+            // 清空列表
+            websiteList.innerHTML = '';
+            
+            if (filteredWebsites.length === 0) {
+                // 显示空状态
+                websiteList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>暂无网站</h3>
+                        <p>当前分类下暂无收录的网站</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 生成网站卡片
+            filteredWebsites.forEach(website => {
+                const websiteItem = document.createElement('div');
+                websiteItem.className = 'website-item';
+                
+                // 创建标签HTML
+                const tagsHTML = website.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+                
+                websiteItem.innerHTML = `
+                    <div class="website-favicon">
+                        <img src="${website.favicon}" alt="${website.name}图标" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxMiIgZmlsbD0iIzRhNmZhNSIvPjx0ZXh0IHg9IjMyIiB5PSIzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjIwIiBmaWxsPSJ3aGl0ZSIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0c3BhbiBkeT0iMCI+JHt3ZWJzaXRlLm5hbWUuY2hhckF0KDApfTwvdHNwYW4+PC90ZXh0Pjwvc3ZnPg=='">
+                        <h3>${website.name}</h3>
+                    </div>
+                    <div class="website-info">
+                        <a href="${website.url}" target="_blank" class="website-url">${website.url}</a>
+                        <div class="website-desc">${website.description}</div>
+                        <div class="website-tags">
+                            <span class="tag category-tag">${website.category}</span>
+                            ${tagsHTML}
+                        </div>
+                        <div class="website-date">
+                            <i class="far fa-calendar-alt"></i> 收录于: ${website.addedDate}
+                        </div>
+                    </div>
+                `;
+                
+                websiteList.appendChild(websiteItem);
+            });
+        }
+        
+        // 更新分类导航
+        function updateCategoryNav() {
+            // 获取所有分类
+            const categories = new Set(websites.map(w => w.category));
+            const categoryNav = document.querySelector('.category-nav');
+            
+            // 移除除"全部网站"外的所有按钮
+            const allBtn = categoryNav.querySelector('[data-category="all"]');
+            categoryNav.innerHTML = '';
+            categoryNav.appendChild(allBtn);
+            
+            // 添加分类按钮（按字母顺序排序）
+            Array.from(categories).sort().forEach(category => {
+                const btn = document.createElement('button');
+                btn.className = 'category-btn';
+                btn.dataset.category = category;
+                btn.textContent = category;
+                categoryNav.appendChild(btn);
+            });
+            
+            // 添加分类按钮事件
+            categoryNav.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 移除所有按钮的active类
+                    categoryNav.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                    // 给当前按钮添加active类
+                    this.classList.add('active');
+                    // 渲染对应分类的网站
+                    renderWebsites(this.dataset.category);
+                });
+            });
+        }
+        
+        // 更新统计数据
+        function updateStats() {
+            // 计算分类数量
+            const categories = new Set(websites.map(w => w.category));
+            document.getElementById('categoryCount').textContent = categories.size;
+        }
+        
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            updateCategoryNav();
+            renderWebsites();
+        });
+    </script>
+</body>
+</html>
