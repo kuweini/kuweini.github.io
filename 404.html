@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面未找到 - 博客404错误</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Georgia', serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+        }
+        
+        .error-icon {
+            font-size: 6rem;
+            color: #e74c3c;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .error-code {
+            font-size: 5rem;
+            font-weight: 300;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .message {
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto 40px;
+            color: #555;
+        }
+        
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #495057;
+            border: 1px solid #dee2e6;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+        
+        .search-form {
+            display: flex;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .search-input {
+            flex-grow: 1;
+            padding: 14px 20px;
+            border: 1px solid #ddd;
+            border-right: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .search-input:focus {
+            border-color: #3498db;
+        }
+        
+        .search-btn {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 0 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .search-btn:hover {
+            background-color: #1a252f;
+        }
+        
+        .suggestions {
+            margin-top: 40px;
+            text-align: left;
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .suggestions h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .suggestions ul {
+            list-style-type: none;
+        }
+        
+        .suggestions li {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .suggestions li:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .suggestions a {
+            color: #3498db;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .suggestions a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        
+        .blog-footer {
+            margin-top: 40px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .error-code {
+                font-size: 4rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .search-form {
+                flex-direction: column;
+            }
+            
+            .search-input {
+                border-radius: 4px 4px 0 0;
+                border-right: 1px solid #ddd;
+                border-bottom: none;
+            }
+            
+            .search-btn {
+                border-radius: 0 0 4px 4px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        
+        <div class="error-code">404</div>
+        
+        <h1>哎呀，您寻找的页面不存在</h1>
+        
+        <p class="message">
+            看起来您访问的页面可能已被移动、删除或暂时不可用。请检查网址是否正确，或尝试下面的选项。
+        </p>
+        
+        <div class="search-box">
+            <form class="search-form" action="#" method="GET">
+                <input type="text" class="search-input" placeholder="搜索博客文章..." name="search">
+                <button type="submit" class="btn search-btn">
+                    <i class="fas fa-search"></i> 搜索
+                </button>
+            </form>
+        </div>
+        
+        <div class="actions">
+            <a href="#" class="btn btn-primary">
+                <i class="fas fa-home"></i> 返回博客首页
+            </a>
+            <a href="#" class="btn btn-secondary">
+                <i class="fas fa-newspaper"></i> 查看最新文章
+            </a>
+            <a href="#" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> 返回上一页
+            </a>
+        </div>
+        
+        <div class="suggestions">
+            <h3>您可能感兴趣的内容：</h3>
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-file-alt"></i> 如何开始写博客：新手指南
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-file-alt"></i> 2023年最佳JavaScript框架比较
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-file-alt"></i> 响应式Web设计的基本原则
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-file-alt"></i> 提升网站性能的10个技巧
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="blog-footer">
+        <p>&copy; 2023 我的博客 | 遵循知识共享协议</p>
+        <p>遇到问题？<a href="#" style="color:#3498db;">联系我们</a></p>
+    </div>
+    
+    <script>
+        // 简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const errorCode = document.querySelector('.error-code');
+            
+            // 为404数字添加简单动画
+            errorCode.addEventListener('mouseover', function() {
+                this.style.transform = 'scale(1.05)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            errorCode.addEventListener('mouseout', function() {
+                this.style.transform = 'scale(1)';
+            });
+            
+            // 搜索框聚焦效果
+            const searchInput = document.querySelector('.search-input');
+            searchInput.addEventListener('focus', function() {
+                this.parentElement.style.boxShadow = '0 2px 15px rgba(52, 152, 219, 0.2)';
+            });
+            
+            searchInput.addEventListener('blur', function() {
+                this.parentElement.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.08)';
+            });
+            
+            // 表单提交处理
+            const searchForm = document.querySelector('.search-form');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const searchTerm = searchInput.value.trim();
+                
+                if (searchTerm) {
+                    // 这里可以添加实际搜索逻辑
+                    alert(`搜索: ${searchTerm}\n(这是示例，实际项目中会跳转到搜索结果页)`);
+                    searchInput.value = '';
+                } else {
+                    alert('请输入搜索关键词');
+                    searchInput.focus();
+                }
+            });
+            
+            // 为所有按钮添加点击反馈
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 如果是示例链接，阻止跳转并显示提示
+                    if (this.getAttribute('href') === '#') {
+                        const btnText = this.textContent.trim();
+                        alert(`您点击了: ${btnText}\n(这是示例，实际项目中会跳转到相应页面)`);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
